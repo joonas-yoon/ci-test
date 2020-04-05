@@ -1,0 +1,5 @@
+# CI-test
+
+This repository is for testing CI actions (by GitHub, Travis-CI, ...)
+
+Check out the Actions tab or links of badge
