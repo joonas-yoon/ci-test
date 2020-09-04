@@ -8,11 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          fetch-depth: 2
           ref: ${{ github.event.push.head.ref }}
 
       - name: Check diff
         run: |
           git branch -l
+          git log -2
           MSG=`git diff ${GITHUB_REF##*/} ${GITHUB_REF##*/}~1 --name-only | egrep [0-9]+\/`
           if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
 
