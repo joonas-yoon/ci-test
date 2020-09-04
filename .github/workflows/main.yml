@@ -24,6 +24,7 @@ jobs:
           DIF: ${{ env.DIF }}
           MSG: ${{ env.MSG }}
         run: |
+          git pull
           git config --global user.name 'Joona Yoon'
           git config --global user.email 'joonas-yoon@users.noreply.github.com'
           echo $MSG >> READMD.md
