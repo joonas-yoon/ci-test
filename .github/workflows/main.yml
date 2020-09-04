@@ -12,9 +12,10 @@ jobs:
           ref: ${{ github.event.push.head.ref }}
 
       - name: Check diff
+        shell: bash
         run: |
           MSG=`git diff HEAD HEAD~1 --name-only | egrep [0-9]+\/`
-          if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
+          if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi || true
 
       - name: Test if-condition
         if: ${{ env.TESTVAR }}
