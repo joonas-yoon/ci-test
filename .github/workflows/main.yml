@@ -12,7 +12,8 @@ jobs:
 
       - name: Check diff
         run: |
-          MSG=`git diff ${GITHUB_REF##*/}~1 --name-only | egrep [0-9]+\/`
+          git branch -l
+          MSG=`git diff ${GITHUB_REF##*/} ${GITHUB_REF##*/}~1 --name-only | egrep [0-9]+\/`
           if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
 
       - name: Test if-condition
