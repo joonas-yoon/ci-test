@@ -24,10 +24,9 @@ jobs:
           DIF: ${{ env.DIF }}
           MSG: ${{ env.MSG }}
         run: |
-          git pull
           git config --global user.name 'Joona Yoon'
           git config --global user.email 'joonas-yoon@users.noreply.github.com'
           echo $MSG >> READMD.md
           git add README.md
-          git commit --amend --no-edit
+          git commit -m "Automated changes:\n${DIF}"
           git push
