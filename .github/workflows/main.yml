@@ -10,9 +10,10 @@ jobs:
 
       - name: Check diff
         run: |
-          if (( $(git diff --name-only HEAD~1 | egrep [0-9]+\/ | wc -l) -n )); then export TESTVAR=1; fi
+          MSG=`git diff --name-only HEAD~1 | egrep [0-9]+\/`
+          if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
 
       - name: Test if-condition
         if: ${{ env.TESTVAR }}
         run: |
-          echo "PASSED IF CONDITION"
+          echo "PASSED IF CONDITION : $MSG"
