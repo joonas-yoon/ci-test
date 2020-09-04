@@ -14,12 +14,18 @@ jobs:
       - name: Check diff
         shell: bash
         run: |
-          MSG=`git diff HEAD HEAD~1 --name-only | egrep [0-9]+\/` || true
-          if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi || true
+          echo ::set-env name=DIF::`git diff HEAD HEAD~1 --name-only | egrep [0-9]+\/` || true
+          MSG=`git log -1 --pretty=%B | head -1 | awk '{print "|" strftime("%Y/%m/%d") "|" $0 "|" }'`
+          if (( $(echo $DIF | wc -l) -n )); then echo ::set-env name=MSG::$MSG; fi || true
 
-      - name: Test if-condition
-        if: ${{ env.TESTVAR }}
+      - name: Commit and Push changes
+        if: ${{ env.MSG }}
         env:
-          msg: ${{ env.TESTVAR }}
+          DIF: ${{ env.DIF }}
+          MSG: ${{ env.MSG }}
         run: |
-          echo "PASSED IF CONDITION : $msg"
+          git config --global user.name 'Joona Yoon'
+          git config --global user.email 'joonas-yoon@users.noreply.github.com'
+          echo $MSG >> READMD.md
+          git commit -am "Automated updates\n$DIF"
+          git push
