@@ -10,7 +10,7 @@ jobs:
 
       - name: Check diff
         run: |
-          MSG=`git diff --name-only HEAD~1 | egrep [0-9]+\/`
+          MSG=`git diff --name-only HEAD HEAD~1 | egrep [0-9]+\/`
           if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
 
       - name: Test if-condition
