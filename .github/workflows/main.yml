@@ -13,12 +13,12 @@ jobs:
 
       - name: Check diff
         run: |
-          git branch -l
-          git log -2
           MSG=`git diff ${GITHUB_REF##*/} ${GITHUB_REF##*/}~1 --name-only | egrep [0-9]+\/`
           if (( $(echo $MSG | wc -l) -n )); then echo ::set-env name=TESTVAR::$MSG; fi
 
       - name: Test if-condition
         if: ${{ env.TESTVAR }}
+        env:
+          msg: ${{ env.TESTVAR }}
         run: |
-          echo "PASSED IF CONDITION : $MSG"
+          echo "PASSED IF CONDITION : $msg"
