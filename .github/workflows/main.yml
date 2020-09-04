@@ -24,7 +24,7 @@ jobs:
           MSG=`git log -1 --pretty=%B | head -1 | awk '{print "|" strftime("%Y/%m/%d") "|" $0 "|" }'`
           git config --global user.name 'Joona Yoon'
           git config --global user.email 'joonas-yoon@users.noreply.github.com'
-          echo $MSG >> READMD.md
+          echo $MSG >> README.md
           git add README.md
           git commit -m "Automated changes:\n${DIF}"
           git push
